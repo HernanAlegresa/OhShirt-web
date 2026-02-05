@@ -16,7 +16,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="relative w-full"
+        className="relative w-full min-h-[57vh] md:min-h-0"
       >
         {/* Desktop image */}
         <Image
@@ -29,15 +29,14 @@ export function Hero() {
           className="w-full h-auto hidden md:block"
           sizes="100vw"
         />
-        {/* Mobile image - natural aspect ratio, no stretching */}
+        {/* Mobile image - fills at least 60vh, covers without distortion */}
         <Image
           src="/hero/hero_mobile.jpeg"
           alt="Oh Sh!rt"
-          width={1080}
-          height={1350}
+          fill
           quality={95}
           priority
-          className="w-full h-auto md:hidden"
+          className="object-cover md:hidden"
           sizes="100vw"
         />
       </motion.div>
