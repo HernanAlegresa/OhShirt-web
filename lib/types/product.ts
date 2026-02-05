@@ -1,3 +1,4 @@
+// Product type definitions for Oh Sh!rt store
 export type Size = "XS" | "S" | "M" | "L" | "XL" | "One Size";
 
 export type Color = {
