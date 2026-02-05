@@ -35,10 +35,12 @@ function CollectionCard({
   collection,
   index,
   globalImageIndex,
+  className = "",
 }: {
   collection: (typeof collections)[0];
   index: number;
   globalImageIndex: number;
+  className?: string;
 }) {
   const products = getProductsByCollection(collection.slug);
   const allImages = products.flatMap((product) => product.images);
@@ -51,6 +53,7 @@ function CollectionCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-30px" }}
       transition={{ duration: 0.4, delay: index * 0.08 }}
+      className={className}
     >
       <Link
         href={`/shop?collection=${collection.slug}`}
@@ -85,8 +88,8 @@ function CollectionCard({
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="px-4 py-2 bg-black/30 backdrop-blur-[2px] rounded-lg">
-              <h3 className="font-semibold text-white text-center text-lg tracking-wide" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+            <span className="md:px-4 md:py-2 md:bg-black/30 md:backdrop-blur-[2px] md:rounded-lg">
+              <h3 className="font-semibold text-white text-center text-sm md:text-lg tracking-wide" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                 {collection.name}
               </h3>
             </span>
@@ -101,9 +104,11 @@ function CollectionCard({
 function FeaturedCollectionCard({
   collection,
   index,
+  className = "",
 }: {
   collection: (typeof collections)[0];
   index: number;
+  className?: string;
 }) {
   const products = getProductsByCollection(collection.slug);
   const productImages = products.map((product) => product.images[0]).filter(Boolean);
@@ -121,7 +126,7 @@ function FeaturedCollectionCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-30px" }}
       transition={{ duration: 0.4, delay: index * 0.08 }}
-      className="col-span-2 sm:col-span-3"
+      className={className || "col-span-2 sm:col-span-3"}
     >
       <Link
         href={`/shop?collection=${collection.slug}`}
@@ -150,8 +155,8 @@ function FeaturedCollectionCard({
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
 
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="px-6 py-3 bg-black/30 backdrop-blur-[2px] rounded-lg">
-              <h3 className="font-semibold text-white text-center text-2xl sm:text-3xl tracking-wide" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+            <span className="md:px-6 md:py-3 md:bg-black/30 md:backdrop-blur-[2px] md:rounded-lg">
+              <h3 className="font-semibold text-white text-center text-base md:text-2xl lg:text-3xl tracking-wide" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                 {collection.name}
               </h3>
             </span>
@@ -166,9 +171,11 @@ function FeaturedCollectionCard({
 function DoubleCollectionCard({
   collection,
   index,
+  className = "",
 }: {
   collection: (typeof collections)[0];
   index: number;
+  className?: string;
 }) {
   // Specific images for accessories collection
   const accessoriesImages = [
@@ -197,7 +204,7 @@ function DoubleCollectionCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-30px" }}
       transition={{ duration: 0.4, delay: index * 0.08 }}
-      className="col-span-2"
+      className={className || "col-span-2"}
     >
       <Link
         href={`/shop?collection=${collection.slug}`}
@@ -226,8 +233,8 @@ function DoubleCollectionCard({
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="px-4 py-2 bg-black/30 backdrop-blur-[2px] rounded-lg">
-              <h3 className="font-semibold text-white text-center text-lg tracking-wide" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+            <span className="md:px-4 md:py-2 md:bg-black/30 md:backdrop-blur-[2px] md:rounded-lg">
+              <h3 className="font-semibold text-white text-center text-sm md:text-lg tracking-wide" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                 {collection.name}
               </h3>
             </span>
@@ -251,10 +258,77 @@ export function CategoryShowcase() {
   const bottomLeftCollection = getCollection(homepageLayout.bottomRowLeft);
   const bottomRightCollection = getCollection(homepageLayout.bottomRowRight);
 
+  // Mobile-specific collections
+  const polosCollection = getCollection("polos");
+  const flannelShortCollection = getCollection("flannel-short-sleeve");
+  const jacketsCollection = getCollection("jackets");
+  const accessoriesCollection = getCollection("accessories");
+  const flannelLongCollection = getCollection("flannel-long-sleeve");
+
   return (
     <section id="collection-showcase" className="relative pt-2 pb-8 sm:pt-3 sm:pb-10">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+        {/* MOBILE LAYOUT - hidden on md and up */}
+        <div className="grid grid-cols-2 gap-3 md:hidden">
+          {/* Row 1: Featured full-width (Flannel Patchwork) */}
+          {featuredCollection && (
+            <FeaturedCollectionCard
+              key={`mobile-${featuredCollection.id}`}
+              collection={featuredCollection}
+              index={0}
+              className="col-span-2"
+            />
+          )}
+
+          {/* Row 2: Polos + Flannel Short Sleeve */}
+          {polosCollection && (
+            <CollectionCard
+              key={`mobile-${polosCollection.id}`}
+              collection={polosCollection}
+              index={1}
+              globalImageIndex={globalImageIndex}
+            />
+          )}
+          {flannelShortCollection && (
+            <CollectionCard
+              key={`mobile-${flannelShortCollection.id}`}
+              collection={flannelShortCollection}
+              index={2}
+              globalImageIndex={globalImageIndex}
+            />
+          )}
+
+          {/* Row 3: Accessories full-width */}
+          {accessoriesCollection && (
+            <DoubleCollectionCard
+              key={`mobile-${accessoriesCollection.id}`}
+              collection={accessoriesCollection}
+              index={3}
+              className="col-span-2"
+            />
+          )}
+
+          {/* Row 4: Jackets + Flannel Long Sleeve */}
+          {jacketsCollection && (
+            <CollectionCard
+              key={`mobile-${jacketsCollection.id}`}
+              collection={jacketsCollection}
+              index={4}
+              globalImageIndex={globalImageIndex}
+            />
+          )}
+          {flannelLongCollection && (
+            <CollectionCard
+              key={`mobile-${flannelLongCollection.id}`}
+              collection={flannelLongCollection}
+              index={5}
+              globalImageIndex={globalImageIndex}
+            />
+          )}
+        </div>
+
+        {/* DESKTOP LAYOUT - hidden below md */}
+        <div className="hidden md:grid md:grid-cols-3 gap-4">
           {/* Top Row - 3 collections */}
           {topRowCollections.map((collection, index) => (
             <CollectionCard
@@ -271,6 +345,7 @@ export function CategoryShowcase() {
               key={featuredCollection.id}
               collection={featuredCollection}
               index={3}
+              className="col-span-3"
             />
           )}
 
@@ -280,6 +355,7 @@ export function CategoryShowcase() {
               key={bottomLeftCollection.id}
               collection={bottomLeftCollection}
               index={4}
+              className="col-span-2"
             />
           )}
           {bottomRightCollection && (

@@ -6,13 +6,19 @@ import { motion } from "framer-motion";
 export function Hero() {
   return (
     <section id="hero" className="relative w-full">
-      {/* Full-width Hero Image - preserves entire image with no cropping */}
+      {/*
+        MOBILE - Ajustes (cambia y guarda para ver con hot reload):
+        - Altura del bloque: min-h-[56vh] → cambia 56 (ej: 60, 70, 80).
+        - Posición de la imagen: en la clase object-[...] del Image mobile (abajo).
+          Ejemplo: object-[50%_40%] = 50% horizontal, 40% vertical (0=arriba/izq, 100=abajo/der).
+      */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="w-full"
+        className="relative w-full"
       >
+        {/* Desktop image */}
         <Image
           src="/hero/hero-image.jpeg"
           alt="Oh Sh!rt"
@@ -20,7 +26,18 @@ export function Hero() {
           height={1080}
           quality={95}
           priority
-          className="w-full h-auto"
+          className="w-full h-auto hidden md:block"
+          sizes="100vw"
+        />
+        {/* Mobile image - natural aspect ratio, no stretching */}
+        <Image
+          src="/hero/hero_mobile.jpeg"
+          alt="Oh Sh!rt"
+          width={1080}
+          height={1350}
+          quality={95}
+          priority
+          className="w-full h-auto md:hidden"
           sizes="100vw"
         />
       </motion.div>

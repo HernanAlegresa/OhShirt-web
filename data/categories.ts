@@ -22,19 +22,19 @@ export const categories: Category[] = [
   },
   {
     id: "flannel-long-sleeve",
-    name: "Flannel Shirts – Long Sleeve",
+    name: "Flannel Sh!rts – Long Sleeve",
     slug: "flannel-long-sleeve",
     description: "Classic long sleeve flannels with timeless plaid patterns.",
   },
   {
     id: "flannel-short-sleeve",
-    name: "Flannel Shirts – Short Sleeve",
+    name: "Flannel Sh!rts – Short Sleeve",
     slug: "flannel-short-sleeve",
     description: "Short sleeve flannels for warm weather styling.",
   },
   {
     id: "flannel-patchwork-long-sleeve",
-    name: "Flannel Patchwork Shirts – Long Sleeve",
+    name: "Flannel Patchwork Sh!rts – Long Sleeve",
     slug: "flannel-patchwork-long-sleeve",
     description: "Bold patchwork flannels with mixed fabrics and patterns.",
   },
